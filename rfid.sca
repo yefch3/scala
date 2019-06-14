@@ -1,0 +1,47 @@
+﻿!ScalaScript1103
+// Saved by Scala Designer 发布 11.03.05 at 2019-06-05 20:50:48
+:"rfid0605.sca"
+{
+  Group:
+    External String(item[2]("default", "default"));
+    //Template String(filename);
+    String(filename("D:\Study\scala\trigger_video_with_RFID\rfid.csv"));
+    String(flag);
+    BackgroundSettings(Size(720, 800), Layout(On, Left(21, 201)));
+    Config.RecentPublishLocations(PublishLocation("61.152.122.169 cm", "Rfid0605"), PublishLocation("61.152.122.169 cm", "Rfid0603"), PublishLocation("61.152.122.169 cm", "Rfid0602- no template"), PublishLocation("61.152.122.169 cm", "Rfid0602"), PublishLocation("61.152.122.169 cm", "Rfid0529"));
+  Sequence:
+    :"page1"
+    {
+      Group:
+        //Onnotification(flag, Goto("page3"));
+        While(On);
+      Sequence:
+        WindowsScript("read_rfid.py", Wait(On), Engine("Python.AXScript.2"), ShareVariable(filename), ShareVariable(item));
+        flag = item[1];
+        {
+          Group:
+            If(flag = "rfid2");
+          Sequence:
+            Goto("page2");
+        }
+        {
+          Group:
+            If(flag = "rfid3");
+          Sequence:
+            Goto("page3");
+        }
+        Movie("video1.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On));
+    }
+    :"page2"
+    {
+      Sequence:
+        Movie("video2.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On));
+        Goto("page1");
+    }
+    :"page3"
+    {
+      Sequence:
+        Movie("video3.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On));
+        Goto("page1");
+    }
+}
