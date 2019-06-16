@@ -1,0 +1,66 @@
+!ScalaScript1030
+:"rfid0616.sca"
+{
+  Group:
+    String(item);
+    BackgroundSettings(Size(1920, 1080));
+    //Template String(filename);
+    String(filename("D:\Study\scala\trigger_video_with_RFID\rfid.txt"));
+    OnNotification(item, Use("check_item"));
+  Sequence:
+    WindowsScript("read_rfid.py", Engine("Python.AXScript.2"), ShareVariable(filename), ShareVariable(item, name("item")));
+    :"page_default"
+    {
+      Group:
+        Movie("video4.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On), Loops(-1));
+        Text(10,10,item);
+        Wait();
+    }
+    :"page1"
+    {
+      Group:
+        Movie("video1.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On), Loops(-1));
+        Wait();
+    }
+    :"page2"
+    {
+      Group:
+        Movie("video2.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On), Loops(-1));
+        Wait();
+    }
+    :"page3"
+    {
+      Group:
+        Movie("video3.wmv", Backdrop(Pen(1)), Margin(10, 10, 0, 0), UserPalette(RGBPen(1, $0, $ffffff, $999999, $555555, $712068, $df449c, $dc110e, $662200, $ff5a00, $ff9c00, $ffee00, $8800, $dd00, $cccc, $66ff, $aa, $777777, $bbbbbb, $dddddd, $465a96)), AutoScale(FitInside), Operation(On), Loops(-1));
+        Wait();
+    }
+  Resources:
+    :"check_item"
+    {
+      {
+        Group:
+          If(item="rfid1");
+        Sequence:
+          Goto("page1");
+      }
+      {
+        Group:
+          ElseIf(item="rfid2");
+        Sequence:
+          Goto("page2");
+      }
+      {
+        Group:
+          ElseIf(item="rfid3");
+        Sequence:
+          Goto("page3");
+      }
+      {
+        Group:
+          ElseIf(item="default");
+        Sequence:
+          Goto("page_default");
+      }
+    }
+
+}
